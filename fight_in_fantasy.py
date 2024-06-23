@@ -9,7 +9,8 @@ def clear_screen():
 
 ############ REQUIREMENTS FOR PLAYER ###############
 
-inventory = []
+inventory = ["rope", "flint"]
+health_potions = 2
 purse = 5
 
 class Player:
@@ -63,7 +64,7 @@ class Enemy:
         return f"{self.name} (Skill: {self.skill}. Stamina: {self.stamina}, Damage: {self.damage})"
 
 goblin = Enemy(name="Goblin", skill=5, stamina=10, damage=5)
-sprite = Enemy(name="Sprite", skill=2, stamina=5, damage=8)
+sprite = Enemy(name="Sprite", skill=10, stamina=15, damage=7)
 mutant_plant = Enemy(name="Mutant Plant", skill=3, stamina=12, damage=6)
 ogre = Enemy(name="Ogre", skill=7, stamina = 14, damage = 10)
 
@@ -133,19 +134,28 @@ def encounter_enemy(enemy):
 #        
 def start_game():
     clear_screen()
-    start = """Welcome to the Enchanted Forest Adventure Game!
+    global purse
+    global health_potions
+    global inventory
+
+    start = f"""The Forest of Morrowfield Adventure Game!
+    
+STARTING STATS         INVENTORY
+Skill: {player.skill}               Gold: {purse}
+Stamina: {player.stamina}            Health Potions: {health_potions}
+Luck: {player.luck}                Bag: {inventory}
     
 You have been tasked with the retrieval of the Dagger of Arkathor which was sealed within
-a temple in the centre of the Enchanted Forest of Morrowfin over 100 year ago for its own 
+a temple in the centre of the Enchanted Forest of Morrowfield over 100 year ago for its own 
 protection. As the days grow closer that this sacred relic will be needed, the Arkathorian 
 Council have beseeched their Order of Baruabus to send one of their warriors to retrieve it.
 As one of their best, you have been chosen for this task.
 
 You stand at the edge of the forest, studying the ancient trees and discover two faint paths leading in.
 
-Do you take the faint trail that runs between two giant oaks? (type 1 {para 1})
+Do you take the faint trail that runs between two giant oaks? (type 1 para 1)
 
-Or do you take the other trail that runs amongst thick bushes? (type 2 {para UNWRITTEN}
+Or do you take the other trail that runs amongst thick bushes? (type 2 para UNWRITTEN)
 
 """
     print(start)
@@ -159,6 +169,12 @@ Or do you take the other trail that runs amongst thick bushes? (type 2 {para UNW
         start_game()
     
 def game_over():
+    print("You succumb to your injuries. Your quest is over.")
+    
+def game_over_special():
+    print("The venom of the creature paralyses you. You are powerless as the creature drags you to its lair to feast.")
+
+def game_over_winner():
     pass
 
 ############### PARAGRAPHS ###################
