@@ -49,7 +49,6 @@ class Enemy:
         self.damage = damage
     
     def attack(self):
-        # attack logic here
         return self.damage
         
     def take_damage(self, damage):
@@ -66,9 +65,10 @@ class Enemy:
 goblin = Enemy(name="Goblin", skill=5, stamina=10, damage=5)
 sprite = Enemy(name="Sprite", skill=10, stamina=15, damage=7)
 mutant_plant = Enemy(name="Mutant Plant", skill=3, stamina=12, damage=6)
-ogre = Enemy(name="Ogre", skill=7, stamina = 14, damage = 10)
+ogre = Enemy(name="Ogre", skill=7, stamina=14, damage =10)
+skeleton = Enemy(name="skeleton", skill=6, stamina=10, damage=8)
 
-encounters = [goblin, sprite, mutant_plant, ogre]
+encounters = [goblin, sprite, mutant_plant, ogre,skeleton]
 
 ############## COMBAT FUNCTIONS ###################
 
@@ -269,9 +269,71 @@ Ogre: Skill 7, Stamina 14
     else:
         game_over()
     
-def paragraph_6():
-    print("Ogre dead.")  
+def paragraph_6(): #ogre defeated, take passage or return up stairs
+    clear_screen()
+    para_6_text = """With the ogre defeated, you find a hidden passage behind a large boulder. 
     
+Do you enter the passage? (press 1 {para 7}) 
+
+Or return up the staircase? (press 2 UNWRITTEN)
+"""
+    print(para_6_text)
+    choice_para_6 = input("Make your choice and press Enter: ")
+    if choice_para_6 == "1":
+        paragraph_7()
+    elif choice_para_6 == "2":
+        pass #unwritten
+    else:
+        print("Something went wrong, try again")
+        paragraph_6()
+        
+def paragraph_7(): #skeleton encounter
+    clear_screen()
+    para_7_text = """The hidden passage leads you to a secret chamber filled with treasure! However, 
+a guardian skeleton stands in your way.
+
+Skeleton: Skill 6, Stamina 6
+"""
+    print(para_7_text)
+    encounter_enemy(skeleton)
+    if player.stamina > 0:
+        paragraph_8()
+    else:
+        game_over()
+    
+def paragraph_8(): #take gold, look at items
+    global purse
+    clear_screen()
+    para_8_text = """ With the guardian skeleton defeated, you take time to pick through the treasure.
+It looks like the remains of a goblin's treasure hoard. Most of it is worn and tarnished with age and 
+of little value or too large to take with you, however you are able to pocket some gold coins. You do
+however find three items small enough that may be of value in your adventure.
+
+    1. A small silver vial
+    2. A strange amulet with a dull yellow stone
+    3. A ring that emits a glow
+    
+Do you take the vial with you? (press 1 {para 9})
+
+Or leave it? (press 2 {para 10})
+"""
+    print(para_8_text)
+    gold = 20
+    purse += gold
+    choice_para_8 = input("Make a choice and press Enter: ")
+    if choice_para_8 == "1":
+        paragraph_9()
+    elif choice_para_8()== "2":
+        paragraph_10()
+    else:
+        ("Something went wrong. Please try again.")
+        paragraph_8()
+        
+def paragraph_9(): #examine and pocket the vial
+    print("Got vial")
+    
+def paragraph_10(): #examine and pocket the amulet
+    print("Got amulet")
 
 ############### MAIN PROGRAM ##################
 
