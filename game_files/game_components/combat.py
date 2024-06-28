@@ -1,11 +1,13 @@
-## Combat Functions ##
+## COMBAT FUNCTIONS ##
+
+# This module contains all the functions pertaining to combat
 
 ## Imported Modules ##
 
 import msvcrt
 import random
-from utilities import *
-from player import *
+from game_files.game_components.utilities import *
+from game_files.game_components.player import *
 
 ## Damage Calculation ##
 

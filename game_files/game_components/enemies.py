@@ -1,5 +1,6 @@
+## ENEMIES ##
 
-## Enemies ##
+# This module contains everything concerning enemies in the game
 
 class Enemy:
     def __init__(self, name, skill, stamina, damage):

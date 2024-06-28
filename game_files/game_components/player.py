@@ -1,4 +1,8 @@
-## Player ##
+## PLAYER ##
+
+# This module contains everything concerning the player. Future considerations will be use of dice functions to determine starting stats
+
+from game_files.game_components.inventory import *
 
 class Player:
     def __init__(self, skill, stamina, luck):
@@ -7,6 +11,7 @@ class Player:
         self.luck = luck
         self.gold = 5
         self.health_potions = 2 # each potion heals 5 stamina
+        self.inventory = Inventory()
     
     def modify_luck(self, amount):
         self.luck += amount
@@ -33,5 +38,7 @@ class Player:
         self.health_potions -= amount
 
 ## Player Stats ##
-#    
+   
 player = Player(skill=8, stamina=20, luck=6)
+
+

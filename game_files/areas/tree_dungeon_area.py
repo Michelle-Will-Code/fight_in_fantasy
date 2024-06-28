@@ -1,9 +1,14 @@
+## TREE DUNGEON AREA ##
+
+# This module contains all the paragraphs from when the player enters the Tree With A Door up to when they leave
+
 ## Imported Modules ## 
 import msvcrt
-from utilities import *
-from endings import *
-from combat import *
-from enemies import *
+from game_files.game_components.utilities import *
+from game_files.areas.endings import *
+from game_files.game_components.combat import *
+from game_files.game_components.enemies import *
+from game_files.areas.forest_area import *
 
 ## Paragraphs ##
 
@@ -99,12 +104,11 @@ Or leave it? (press 2 {para 15})
         paragraph_8()
         
 def paragraph_9(): #examine and pocket the vial. choose amulet or not
-    global inventory
-    inventory.append("Holy Elixir") #add Holy Elixir to inventory
+    player.inventory.add_item("Holy Elixir") #add Holy Elixir to inventory
     clear_screen()
     para_9_text = """You decide to take the silver vial with you. As you examine it more closely, you 
-realize it is filled with holy elixir, a potent substance against evil creatures and curses. (Holy Elixir 
-added to inventory)
+realize it is filled with holy elixir, a potent substance against evil creatures and curses. (Holy 
+Elixir added to inventory)
 
 You look at the amulet next.
 
@@ -123,9 +127,9 @@ Or will you leave it? (press 2 {para 16})
     
 def paragraph_10(): #examine and pocket the amulet
     clear_screen()
-    para_10_text = """Intrigued by the strange amulet you put it round your neck for safekeeping. As soon as
-you do, you feel suddenly weak and fall to the ground as the amulet burns hot against your chest, fusing 
-against your flesh. The amulet is cursed and is draining your life force.
+    para_10_text = """Intrigued by the strange amulet you put it round your neck for safekeeping. As 
+soon as you do, you feel suddenly weak and fall to the ground as the amulet burns hot against your 
+chest, fusing against your flesh. The amulet is cursed and is draining your life force.
 
 Do you have a Holy Elixir? (Press 1 {para 12})
 
@@ -139,11 +143,10 @@ Or not? (Press 2 {para 13})
         paragraph_13() # dont have holy elixir
     
 def paragraph_11(): #examine and pocket the #Ring of Light
-    global inventory
-    inventory.append("Ring of Light")
+    player.inventory.add_item("Ring of Light")
     clear_screen()
-    para_11_text = """You pocket the ring and then retrace your steps, finding yourself back outside the tree once
-more. You continue down the path, leaving the tree behind. 
+    para_11_text = """You pocket the ring and then retrace your steps, finding yourself back outside 
+the tree once more. You continue down the path, leaving the tree behind. 
 """
     print(para_11_text)
     print("Press any key to continue...")
@@ -151,19 +154,18 @@ more. You continue down the path, leaving the tree behind.
     paragraph_20()
     
 def paragraph_12(): #use Holy Elixir to remove amulet
-    global inventory
     clear_screen()
-    para_12_text = """In your weakened state you struggle to open the vial of Holy Elixir but through sheer 
-determination you unstop the bottle and pour it over the amulet. There is a hissing sound and the amulet 
-falls off your chest. You throw it away from you as it turns to dust. You've lost some stamina but are otherwise
-fine.
+    para_12_text = """In your weakened state you struggle to open the vial of Holy Elixir but through 
+sheer determination you unstop the bottle and pour it over the amulet. There is a hissing sound and the 
+amulet falls off your chest. You throw it away from you as it turns to dust. You've lost some stamina 
+but are otherwise fine.
 """
-    para_12_text_1 = """In your weakened state you struggle to open the vial of Holy Elixir but through sheer 
-determination you unstop the bottle and pour it over the amulet. There is a hissing sound and the amulet 
-falls off your chest but you were already weak from your previous battles. You feel yourself fading.
+    para_12_text_1 = """In your weakened state you struggle to open the vial of Holy Elixir but through 
+sheer determination you unstop the bottle and pour it over the amulet. There is a hissing sound and the 
+amulet falls off your chest but you were already weak from your previous battles. You feel yourself fading.
 """
-    if "Holy Elixir" in inventory:
-        inventory.remove("Holy Elixir")
+    if player.inventory.has_item_check("Holy Elixir"):
+        player.inventory.remove_item("Holy Elixir")
         damage = 4
         player.take_damage(damage)
         if player.stamina <= 0:
@@ -182,8 +184,8 @@ falls off your chest but you were already weak from your previous battles. You f
 
 def paragraph_13(): #No holy elixir - calculate survival
     clear_screen()
-    para_13_text = """You have no means to fight off this curse except sheer determination. Struggling against the weakness, 
-you try slicing the amulet off with your dagger.
+    para_13_text = """You have no means to fight off this curse except sheer determination. Struggling 
+against the weakness, you try slicing the amulet off with your dagger.
 """
     print(para_13_text)
     print("Press any key to continue...")
@@ -197,12 +199,12 @@ you try slicing the amulet off with your dagger.
 
 def paragraph_14(): #recover from amulet ordeal (no Holy Elixir)
     clear_screen()
-    para_14_text = """Panting with pain, you managed to slice the amulet from your skin and throw it away, leaving yourself 
-bleeding, but alive.
+    para_14_text = """Panting with pain, you managed to slice the amulet from your skin and throw it away, 
+leaving yourself bleeding, but alive.
 """
-    para_14_text_1 = """After taking some time to recover and deal with your injury, you look at the last item you found, a ring. 
-This time you examine your find more closely and find etchings along the inside that name this the Ring of Light,a useful item for
-lighting up dark areas.
+    para_14_text_1 = """After taking some time to recover and deal with your injury, you look at the last 
+item you found, a ring. This time you examine your find more closely and find etchings along the inside that 
+name this the Ring of Light,a useful item for lighting up dark areas.
 
 Do you take the ring? (press 1 {para 11})
 
@@ -239,8 +241,8 @@ Or will you leave it? (press 2 {para 16})
         
 def paragraph_16(): #leave amulet
     clear_screen()
-    para_16_text = """You dont like the look of the amulet, sensing something dark about it. The leave it alone and
-take a look at the ring.
+    para_16_text = """You dont like the look of the amulet, sensing something dark about it. The leave it alone
+and take a look at the ring.
 
 Do you take the ring? (press 1 {para 19})
 
@@ -257,10 +259,10 @@ Or leave it (press 1 {para 21})
 
 def paragraph_17(): #recover from ordeal (used Holy Elixir)
     clear_screen()
-    para_17_text = """You take a few minutes to calm down after your frightening experience, thinking that you need to
-be more careful in future. After taking some time to recover, you look at the last item you found, a ring. 
-This time you examine your find more closely and find etchings along the inside that name this the Ring of Light,a 
-useful item for lighting up dark areas.
+    para_17_text = """You take a few minutes to calm down after your frightening experience, thinking that you 
+need to be more careful in future. After taking some time to recover, you look at the last item you found, a 
+ring. This time you examine your find more closely and find etchings along the inside that name this the Ring 
+of Light,a useful item for lighting up dark areas.
 
 Do you take the ring? (press 1 {para 11})
 
@@ -277,9 +279,10 @@ Or do you leave it? (press 2 {para 18})
     
 def paragraph_18(): #leave the Ring of Light
     clear_screen()
-    para_18_text = """Your experience with the amulet has put you off taking any kind of jewellery with you. You leave 
-the ring behind. 
-You retrace your steps and find yourself outside the tree once more. You continue down the path, leaving the tree behind.
+    para_18_text = """Your experience with the amulet has put you off taking any kind of jewellery with you. 
+You leave the ring behind. 
+You retrace your steps and find yourself outside the tree once more. You continue down the path, leaving the 
+tree behind.
 """
     print(para_18_text)
     print("Press any key to continue...")
@@ -287,13 +290,11 @@ You retrace your steps and find yourself outside the tree once more. You continu
     paragraph_20()
 
 def paragraph_19(): #take ring and reveal its purpose
-    global inventory
-    inventory.append("Ring of Light")
+    player.inventory.add_item("Ring of Light")
     clear_screen()
-    para_19_text = """Upon closer examination of the ring, you find etchings along the inside that name this the Ring of 
-Light,a useful item for lighting up dark areas.
-After pocketing the ring, you retrace your steps and find yourself back outside the tree once more. You continue down the 
-path, leaving the tree behind.
+    para_19_text = """Upon closer examination of the ring, you find etchings along the inside that name this 
+the Ring of Light,a useful item for lighting up dark areas. After pocketing the ring, you retrace your steps 
+and find yourself back outside the tree once more. You continue down the path, leaving the tree behind.
 """
     print(para_19_text)
     print("Press any key to continue...")
@@ -302,8 +303,8 @@ path, leaving the tree behind.
     
 def paragraph_21():
     clear_screen()
-    para_21_text = """You decide to leave the ring behind. You retrace your steps and find yourself back outside the tree 
-once more. You continue down the path, leaving the tree behind.
+    para_21_text = """You decide to leave the ring behind. You retrace your steps and find yourself back outside
+the tree once more. You continue down the path, leaving the tree behind.
 """
     print(para_21_text)
     print("Press any key to continue ...")
@@ -311,11 +312,13 @@ once more. You continue down the path, leaving the tree behind.
     paragraph_20()
     
 def paragraph_22():
+    clear_screen()
     print("You don't have a Holy Elixir. Press any key to continue...")
     msvcrt.getch()
     paragraph_13()
     
 def paragraph_24():
+    clear_screen()
     para_24_text = """You retrace your steps and find yourself back outside the tree once more.
 You continue down the path, leaving the tree behind."""
     print(para_24_text)

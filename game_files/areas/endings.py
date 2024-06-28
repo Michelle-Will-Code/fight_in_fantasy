@@ -2,7 +2,7 @@
 
 ## Imported Modules ##
 
-from utilities import *
+from game_files.game_components.utilities import *
 
 ## Player Death ##
 
