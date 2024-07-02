@@ -25,11 +25,11 @@ class Enemy:
 
 ## Enemy Stats ##
     
-goblin = Enemy(name="Goblin", skill=5, stamina=10, damage=5)
+goblin = Enemy(name="Goblin", skill=6, stamina=10, damage=5)
 sprite = Enemy(name="Sprite", skill=10, stamina=15, damage=7)
-mutant_plant = Enemy(name="Mutant Plant", skill=3, stamina=12, damage=6)
-ogre = Enemy(name="Ogre", skill=7, stamina=14, damage =10)
-skeleton = Enemy(name="Skeleton", skill=6, stamina=10, damage=8)
+mutant_plant = Enemy(name="Mutant Plant", skill=6, stamina=18, damage=6)
+ogre = Enemy(name="Ogre", skill=8, stamina=14, damage =10)
+skeleton = Enemy(name="Skeleton", skill=7, stamina=10, damage=8)
 ghoul = Enemy(name="Ghoul", skill=5, stamina=12, damage=9)
 
 # Encounters List ##

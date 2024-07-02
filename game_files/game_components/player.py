@@ -12,6 +12,11 @@ class Player:
         self.gold = 5
         self.health_potions = 2 # each potion heals 5 stamina
         self.inventory = Inventory()
+        self.status_effects = 0 #Status_Effects() for future use eg #poison #cursed #broken bones
+        self.memories = 0 #Memory_Effects() for future use eg #paranoia #fear
+        
+    def show_stats(self):
+        return f"Your current stats are: \n\n Skill: {player.skill}  Stamina: {player.stamina} Luck: {player.luck}\n\n"
     
     def modify_luck(self, amount):
         self.luck += amount
@@ -22,6 +27,14 @@ class Player:
         self.stamina -= damage
         if self.stamina <1:
             self.stamina = 0
+            
+    def increase_skill(self, amount):
+        self.skill +=amount
+        
+    def decrease_skill(self, amount):
+        self.skill -= amount
+        if self.skill <0:
+            self.skill = 0
             
     def add_gold(self, amount):
         self.gold += amount

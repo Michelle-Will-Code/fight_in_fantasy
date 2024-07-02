@@ -12,7 +12,7 @@ from game_files.game_components.player import *
 ## Damage Calculation ##
 
 def calculate_damage(attacker_skill, defender_skill): # damage calculation for combat
-    base_damage = 4
+    base_damage = 2
     damage = base_damage + (attacker_skill // 2) - (defender_skill // 2)
     return max(1, damage)
 
@@ -55,7 +55,7 @@ def combat(player, enemy): # simulates the traditional turn based dice rolls for
         #Could have a def function here for game over
     else:
         print(f"\n\n{enemy.name} is defeated!\n")
-        print(f"Your current stats are: \n\n Skill: {player.skill}  Stamina: {player.stamina} Luck: {player.luck}\n\n")
+        print(player.show_stats())
         print("\nPress any key to continue... ")
         msvcrt.getch()
         return True

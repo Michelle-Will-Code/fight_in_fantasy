@@ -4,11 +4,14 @@
 
 from game_files.game_components.player import *
 from game_files.game_components.inventory import *
-from game_files.areas.forest_area import *
+from game_files.areas.tree_dungeon_area import paragraph_1
+from game_files.game_components.utilities import *
 
 ## Global Variables ##
 
 inventory = Inventory()
+status_effects = 0 #Status_Effects() for future use
+memories = 0 #Memory_Effects() for future use
 
 ## START GAME ##
        
@@ -49,4 +52,13 @@ Or do you take the other trail that runs amongst thick bushes? (type 2 para UNWR
 
 ############### MAIN PROGRAM ##################
 
-start_game()    
+if __name__ == "__main__":
+    print("Starting adventure game!")
+    start_game()
+
+#### IDEAS ###
+
+#Could either create difficulty mode by have more than 1 player type - use to choose OR
+# Use dice simulator to create skill, stam and luck
+# inflict status effects on player eg poison
+#indicate memories of past event to alter outcomes in future choices eg paranoia from hermit encounter

@@ -1,6 +1,7 @@
 ## TREE DUNGEON AREA ##
 
-# This module contains all the paragraphs from when the player enters the Tree With A Door up to when they leave
+# This module contains paragraphs 1 to 24 which include first potential goblin attack, all tree dungeon area and the leaving the areas.
+# Last section asks about investigating the plants or not
 
 ## Imported Modules ## 
 import msvcrt
@@ -8,12 +9,44 @@ from game_files.game_components.utilities import *
 from game_files.areas.endings import *
 from game_files.game_components.combat import *
 from game_files.game_components.enemies import *
-from game_files.areas.forest_area import *
-
-## Paragraphs ##
+from game_files.areas.hermit_hut import paragraph_25
 
 ## Paragraphs ### 
 
+def paragraph_1(): #dense trees and a noise
+    clear_screen()
+    para_1_text = """The forest is dense, with tall trees blocking out most of the sunlight. You
+follow a narrow path when you hear rustling in the bushes.
+
+Do you investigate the noise? (type 1 {para 2})
+
+Or do you continue along the path? (type 2 {para 23})
+
+"""
+
+    print(para_1_text)
+    choice_para_1 = input("Make a choice and press Enter: ")
+    if choice_para_1 == "1":
+        paragraph_2()
+    elif choice_para_1 == "2":
+        paragraph_23()
+    else:
+        paragraph_1() #investigate noise
+
+def paragraph_2(): #goblin encounter
+    clear_screen()
+    para_2_text = """You cautiously approach the source of the noise. Suddenly a goblin leaps
+out at you!
+
+Goblin: Skill 5, Stamina 10
+"""
+    print(para_2_text)
+    encounter_enemy(goblin)
+    if player.stamina > 0:
+        paragraph_4() # goblin defeated
+    else:
+        game_over() #player death
+        
 def paragraph_3(): #spiral staircase in tree
     clear_screen()
     para_3_text = """Inside the tree, you find a spiral staircase leading down into darkness. 
@@ -30,6 +63,26 @@ Or leave the tree and continue along the path (press 2 {para 20})?
         paragraph_20()
     else:
         paragraph_3()
+        
+def paragraph_4(): #goblin defeat, tree with door
+    player.add_gold(5)
+    clear_screen()
+    para_4_text = """The goblin falls at your feet. Searching its body, you find a small pouch of
+gold coins. (5 coins are added to your inventory) Continuing forward, you come to a large
+twisted tree with a door carved into its trunk. 
+
+Do you enter the tree? (press 1 {para_3})
+
+Or do you continue down the path (press 2 {para 20}
+"""
+    print(para_4_text)
+    choice_para_4 = input("Make a choice and press Enter: ")
+    if choice_para_4 == "1":
+        paragraph_3() #enter the tree
+    elif choice_para_4 == "2":
+        paragraph_20()
+    else:
+        paragraph_4()
         
 def paragraph_5():
     clear_screen()
@@ -51,7 +104,7 @@ def paragraph_6(): #ogre defeated, take passage or return up stairs
     
 Do you enter the passage? (press 1 {para 7}) 
 
-Or return up the stairs? (press 2 {para_23})
+Or return up the stairs? (press 2 {para_24})
 """
     print(para_6_text)
     choice_para_6 = input("Make your choice and press Enter: ")
@@ -299,7 +352,25 @@ and find yourself back outside the tree once more. You continue down the path, l
     print(para_19_text)
     print("Press any key to continue...")
     msvcrt.getch()
-    paragraph_20()   
+    paragraph_20()  
+    
+def paragraph_20(): #continue down the path, leaving tree behind
+    clear_screen()
+    para_20_text = """You continue along the path until you reach a large, open field. In the center 
+of the field, you see a patch of strange, glowing plants. 
+
+Do you investigate the plants? (press 1 {para 47}) 
+
+Or skirt around the edge of the field? (press 2 {para 25)
+"""
+    print(para_20_text)
+    choice_para_20 = input("Make a choice and press Enter: ")
+    if choice_para_20 == "1":
+        paragraph_47()
+    elif choice_para_20 == "2":
+        paragraph_25()
+    else:
+        paragraph_20()    
     
 def paragraph_21():
     clear_screen()
@@ -317,6 +388,24 @@ def paragraph_22():
     msvcrt.getch()
     paragraph_13()
     
+def paragraph_23(): #ignore noise and continue
+    clear_screen()
+    para_23_text = """You decide to ignore the noise and quickly and quietly pass it by.Continuing 
+forward, you come to a large twisted tree with a door carved into its trunk. 
+
+Do you enter the tree? (press 1 {para_3})
+
+Or do you continue down the path (press 2 {para 20}
+"""
+    print(para_23_text)
+    choice_para_23 = input("Make a choice and press Enter: ")
+    if choice_para_23 == "1":
+        paragraph_3() #enter the tree
+    elif choice_para_23 == "2":
+        paragraph_20() #continue down the path
+    else:
+        paragraph_23()   
+    
 def paragraph_24():
     clear_screen()
     para_24_text = """You retrace your steps and find yourself back outside the tree once more.
@@ -325,3 +414,4 @@ You continue down the path, leaving the tree behind."""
     print("Press any key to continue...")
     msvcrt.getch()
     paragraph_20()
+    
