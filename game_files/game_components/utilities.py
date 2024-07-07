@@ -3,6 +3,7 @@
 ## Imported Modules ##
 
 import random
+import os
 
 ## Dice Simulations ##
 

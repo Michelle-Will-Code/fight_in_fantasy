@@ -5,9 +5,10 @@
 from game_files.game_components.inventory import *
 
 class Player:
-    def __init__(self, skill, stamina, luck):
+    def __init__(self, skill, stamina, max_stamina, luck):
         self.skill = skill
         self.stamina = stamina
+        self.max_stamina = max_stamina
         self.luck = luck
         self.gold = 5
         self.health_potions = 2 # each potion heals 5 stamina
@@ -21,12 +22,17 @@ class Player:
     def modify_luck(self, amount):
         self.luck += amount
         if self.luck <0:
-            self.luck =10
-            
+            self.luck =4
+      
     def take_damage(self, damage):
         self.stamina -= damage
         if self.stamina <1:
             self.stamina = 0
+           
+    def heal_damage(self, amount):
+        self.stamina +=amount
+        if self.stamina > self.max_stamina:
+            self.stamina = self.max_stamina
             
     def increase_skill(self, amount):
         self.skill +=amount
@@ -52,6 +58,6 @@ class Player:
 
 ## Player Stats ##
    
-player = Player(skill=8, stamina=20, luck=6)
+player = Player(skill=8, stamina=20, max_stamina=20, luck=4)
 
 

@@ -8,6 +8,7 @@ import msvcrt
 import random
 from game_files.game_components.utilities import *
 from game_files.game_components.player import *
+from game_files.areas.endings import game_over
 
 ## Damage Calculation ##
 
@@ -20,7 +21,11 @@ def calculate_damage(attacker_skill, defender_skill): # damage calculation for c
 
 def combat(player, enemy): # simulates the traditional turn based dice rolls for combat
     global purse
-    print("\nPrepare to fight!")
+    print("\nPrepare to fight!\n")
+    print("Press any key to continue...")
+    msvcrt.getch()
+    clear_screen()
+    print("Battle results: \n")
     while player.stamina >0 and enemy.stamina >0:
         #Player attack
         player_attack_roll = roll_dice() + player.skill + random.randint(-1,1)
@@ -50,7 +55,9 @@ def combat(player, enemy): # simulates the traditional turn based dice rolls for
      
     #check if player defeated
     if player.stamina <= 0:
-        print("\nYou have been defeated.")
+        print("\nYou have been defeated...")
+        print("\nPress any key to continue...")
+        msvcrt.getch()
         return False
         #Could have a def function here for game over
     else:
@@ -66,5 +73,5 @@ def encounter_enemy(enemy): # deals with enemy generation
         print(" ")
     else:
         print(f"You have fallen in battle. The quest is lost.")
-        exit(0)
+        game_over()
         

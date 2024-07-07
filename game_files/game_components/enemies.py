@@ -27,11 +27,12 @@ class Enemy:
     
 goblin = Enemy(name="Goblin", skill=6, stamina=10, damage=5)
 sprite = Enemy(name="Sprite", skill=10, stamina=15, damage=7)
-mutant_plant = Enemy(name="Mutant Plant", skill=6, stamina=18, damage=6)
-ogre = Enemy(name="Ogre", skill=8, stamina=14, damage =10)
+mutant_plant = Enemy(name="Mutant Plant", skill=4, stamina=10, damage=6)
+ogre = Enemy(name="Ogre", skill=8, stamina=12, damage =10)
 skeleton = Enemy(name="Skeleton", skill=7, stamina=10, damage=8)
 ghoul = Enemy(name="Ghoul", skill=5, stamina=12, damage=9)
+hermit = Enemy(name="Hermit", skill=5, stamina=12, damage = 6)
 
 # Encounters List ##
 
-encounters = [goblin, sprite, mutant_plant, ogre,skeleton,ghoul]
+encounters = [goblin, sprite, mutant_plant, ogre, skeleton, ghoul, hermit]

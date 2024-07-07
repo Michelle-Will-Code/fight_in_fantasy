@@ -1,7 +1,7 @@
 ## TREE DUNGEON AREA ##
 
-# This module contains paragraphs 1 to 24 which include first potential goblin attack, all tree dungeon area and the leaving the areas.
-# Last section asks about investigating the plants or not
+# This module contains paragraphs 1 to 24 
+# INCLUDES: goblin attack, all tree dungeon area, leaving the area, investigate plants
 
 ## Imported Modules ## 
 import msvcrt
@@ -9,7 +9,7 @@ from game_files.game_components.utilities import *
 from game_files.areas.endings import *
 from game_files.game_components.combat import *
 from game_files.game_components.enemies import *
-from game_files.areas.hermit_hut import paragraph_25
+from game_files.areas.hermit_hut import *
 
 ## Paragraphs ### 
 
@@ -51,7 +51,7 @@ def paragraph_3(): #spiral staircase in tree
     clear_screen()
     para_3_text = """Inside the tree, you find a spiral staircase leading down into darkness. 
     
-Do you descend the stairs (press 1 {para 5}) 
+Do you descend the stairs? (press 1 {para 5}) 
 
 Or leave the tree and continue along the path (press 2 {para 20})? 
 """
