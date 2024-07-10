@@ -58,6 +58,9 @@ class Player:
 
 ## Player Stats ##
    
-player = Player(skill=8, stamina=20, max_stamina=20, luck=4)
+player = Player(skill=8, stamina=18, max_stamina=20, luck=4)
+#standard skill 8 stamina 18 max stamina 20 luck 4
+#skill and luck do not need max
+#potentially luck points could be reduced every time luck is tested. introduce luck potion to increase luck again
 
 

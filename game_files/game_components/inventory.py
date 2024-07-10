@@ -29,3 +29,12 @@ class Inventory:
     
     def get_items(self):
         return self.items.copy()
+    
+##inventory items
+
+#Rope - starting item for now
+#Flint - to light a fire
+#Sleep potion - put something to sleep guard etc
+#Holy Elixir - use on cursed items and creatures - amulet, ghoul, etc
+#Ring of light - light up the cave
+#Meat cleaver  - keep if sword is lost. if have instead of sword can turn tide of some battles 

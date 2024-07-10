@@ -134,7 +134,7 @@ def paragraph_8(): #take gold, look at items
     clear_screen()
     para_8_text = """ With the guardian skeleton defeated, you take time to pick through the treasure.
 It looks like the remains of a goblin's treasure hoard. Most of it is worn and tarnished with age and 
-of little value or too large to take with you, however you are able to pocket some gold coins. You do
+of little value or too large to take with you, however you are able to pocket 20 gold coins. You do
 however find three items small enough that may be of value in your adventure.
 
     1. A small silver vial
