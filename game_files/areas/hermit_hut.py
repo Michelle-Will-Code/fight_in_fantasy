@@ -1,7 +1,8 @@
 ## HERMIT HUT ##
 
 ## Contains all forks from investigation of plants and hermit hut area
-## Paragraphs 25 - 47
+## Paragraphs 25 - 44
+## Paragraphs 46 - 47
 
 ## Imported Modules ##
 
@@ -10,6 +11,7 @@ from game_files.game_components.combat import *
 from game_files.areas.endings import *
 from game_files.game_components.enemies import *
 from game_files.game_components.player import *
+from game_files.areas.forest_area import paragraph_45
 
 ## Global variables ## 
 save_inventory = []
@@ -255,7 +257,6 @@ Do you open the door carefully? (press 1 {para 37}
 Or kick it open and prepare to fight? (press 2 {para 38}
 """
     print(para_36_text)
-    print(f"TESTING skill should be 6 {player.skill}")
     choice_para_36 = input("Make a choice and press Enter: ")
     if choice_para_36 == "1":
         paragraph_37() #open door carefully
@@ -425,9 +426,6 @@ Feeling much better, you leave the hut and your experience with the hermit behin
     msvcrt.getch()
     paragraph_45()
 
-
-def paragraph_45():
-    pass #temporary placement - new area after the hermit encounter section
 
 def paragraph_46():
     clear_screen()
