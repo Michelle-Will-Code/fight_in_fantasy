@@ -3,6 +3,7 @@
 # This module contains everything concerning the player. Future considerations will be use of dice functions to determine starting stats
 
 from game_files.game_components.inventory import *
+from game_files.game_components.status_effects import *
 
 class Player:
     def __init__(self, skill, stamina, max_stamina, luck):
@@ -13,8 +14,7 @@ class Player:
         self.gold = 5
         self.health_potions = 2 # each potion heals 5 stamina
         self.inventory = Inventory()
-        self.status_effects = 0 #Status_Effects() for future use eg #poison #cursed #broken bones
-        self.memories = 0 #Memory_Effects() for future use eg #paranoia #fear
+        self.status_effects = Status_Effects()
         
     def show_stats(self):
         return f"Your current stats are: \n\n Skill: {player.skill}  Stamina: {player.stamina} Luck: {player.luck}\n\n"
@@ -55,10 +55,23 @@ class Player:
         
     def subtract_health_potions(self, amount):
         self.health_potions -= amount
+        if self.health_potions < 0:
+            self.health_potions = 0
+            
+    def use_health_potion(self,amount):
+        if self.health_potions >0:
+            self.heal_damage(5)
+            self.subtract_health_potions(1)
+            return True
+        else:
+            return False
+
+        
+   
 
 ## Player Stats ##
    
-player = Player(skill=8, stamina=18, max_stamina=20, luck=4)
+player = Player(skill=8, stamina=18, max_stamina=18, luck=4)
 #standard skill 8 stamina 18 max stamina 20 luck 4
 #skill and luck do not need max
 #potentially luck points could be reduced every time luck is tested. introduce luck potion to increase luck again

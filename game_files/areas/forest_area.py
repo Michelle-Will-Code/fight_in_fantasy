@@ -7,6 +7,9 @@ from game_files.game_components.utilities import *
 from game_files.game_components.combat import *
 from game_files.areas.temple_area import paragraph_100
 from game_files.areas.chasm_area import paragraph_80
+from game_files.areas.chasm_area import paragraph_81
+from game_files.areas.endings import *
+from game_files.game_components.enemies import *
 
 # Paragraphs
 
@@ -143,13 +146,29 @@ along, moving closer to your goal.
     paragraph_57()
 
 def paragraph_54(): #right path into dark part of forest
-    pass
+    clear_screen()
+    para_54_text = """You continue deeper into the forest, the dense canopy above blocking out much of the 
+light. The air grows cooler and the forest feels more foreboding. Suddenly, you encounter a group of goblins 
+blocking your path.
+
+Do you fight the goblins? (press 1 {para 64})
+
+Or try to evade them? (press 2 {para 65})
+"""
+    print(para_54_text)
+    choice_para_54 = input("Make a choice and press Enter: ")
+    if choice_para_54 == "1":
+        paragraph_64()
+    elif choice_para_54 == "2":
+        paragraph_65()
+    else:
+        paragraph_54()
 
 def paragraph_55(): #enter cave
     clear_screen()
     para_55_text = """You carefully enter the cave, your footsteps echoing off the damp walls. The air 
 inside is cool and musty, and you feel a slight draft from deeper within. As you venture further, you 
-see faint glimmers of light reflecting off the cave walls.
+see a faint glimmer of light deep within.
 
 Do you explore deeper? (press 1 {para 62})
 
@@ -216,7 +235,15 @@ breaks under your weight.
         paragraph_61()
 
 def paragraph_59(): #find a way down
-    pass
+    clear_screen()
+    para_59_text = """You decide the bridge is too risky and search for another way around the chasm. After
+some time, you find a narrow path that seems to lead down into the chasm. It looks treacherous, but it might
+be safer than the bridge.
+"""
+    print(para_59_text)
+    print("Press any key to continue...")
+    msvcrt.getch()
+    paragraph_81()
 
 def paragraph_60(): #lucky on bridge
     clear_screen()
@@ -231,17 +258,42 @@ journey.
 
 def paragraph_61(): #unlucky on bridge
     clear_screen()
+    stamina_loss = 6
+    skill_loss = 2
+    player.take_damage(stamina_loss)
+    player.decrease_skill(skill_loss)
     para_61_text = """As the plank breaks under you, you lose your balance and fall. You try to grab onto
 the bridge, but your fingers slip, and you plummet down ito the chasm. Your fall is broken by one of the 
 gharled trees and you tumble into the yellow fog, landing in wet putrid mud before blacking out.
 """
-    print(para_61_text)
-    print("Press any key to continue...")
-    msvcrt.getch()
-    paragraph_80() #new section
+    if player.stamina <= 0:
+        game_over_fall()
+    else:
+        print(para_61_text)
+        print("Press any key to continue...")
+        msvcrt.getch()
+        paragraph_80() #new section
     
-def paragraph_62(): #explore cave further
-    pass
+def paragraph_62(): #explore cave further #check invetory for Ring of Light
+    clear_screen()
+    para_62_text = """The cave is far too dark to progress further without some light. If you have the Ring
+of Light, you could use it here.
+
+Do you use the Ring of Light? (press 1 {para 69})
+
+Or do you not have this ring? (press 2 {para 70})
+"""
+    print(para_62_text)
+    choice_para_62 = input("Make a choice and press Enter: ")
+    if choice_para_62 == "1":
+         if player.inventory.has_item_check("Ring of Light"):
+            paragraph_69()
+         else:
+            paragraph_70()
+    elif choice_para_62 == "2":
+        paragraph_70()
+    else:
+        paragraph_62()
 
 def paragraph_63(): #leave the cave
     clear_screen()
@@ -260,8 +312,184 @@ Or take the right path into the darker area? (press 2 {para 54})
     elif choice_para_63 == "2":
         paragraph_54()
     else:
-        paragraph_63
+        paragraph_63()
+        
+def paragraph_64(): #fight goblins
+    clear_screen()
+    para_64_text = """The goblins notice you as you step out and prepare for battle. You must fight them.
+    
+Goblin: Skill 5, Stamina 6
 
+Goblin: Skill 5, Stamina 6
+"""
+    print(para_64_text)
+    encounter_enemy(goblin)
+    if player.stamina > 0:
+        encounter_enemy(goblin)
+        if player.stamina > 0:
+            paragraph_66() # goblin defeated
+        else:
+            game_over() #player death
+    else:
+        game_over() #player death
+    
 
+def paragraph_65(): #try to evade goblins
+    clear_screen()
+    para_65_text = """You try to sneak past the goblins, moving slowly and quietly. Time to test your Skill.
+"""
+    print(para_65_text)
+    print("Press any key to continue")
+    msvcrt.getch()
+    skill_check = roll_dice()
+    if skill_check <= player.skill:
+        paragraph_67()
+    else:
+        paragraph_68()  
 
+def paragraph_66(): #goblins defeated
+    para_66_text = """You successfully deal with the goblins and continue on your way, feeling a mixture of 
+relief and determination. Eventually, you come upon a wide chasm with a rickety old bridge spanning the gap."""
 
+def paragraph_67(): #evade successful
+    pass
+
+def paragraph_68(): #evade failed
+    clear_screen()
+    para_68_text = """You step on a twig which cracks under your weight. The goblins are alerted to your 
+presence and rush to attack.
+    
+Goblin: Skill 5, Stamina 6
+
+Goblin: Skill 5, Stamina 6
+"""
+    print(para_68_text)
+    encounter_enemy(goblin)
+    if player.stamina > 0:
+        encounter_enemy(goblin)
+        if player.stamina > 0:
+            paragraph_66() # goblin defeated
+        else:
+            game_over() #player death
+    else:
+        game_over() #player death
+
+def paragraph_69(): #have Ring of Light
+    clear_screen()
+    para_69_text = """You place the ring on your finger and it immeditely lights up your surroundings, enabling you
+to continue your exploration. As you venture deeper, the glimmer of light becomes more pronounced. You turn a corner
+into a large space. An altar of some sort stands in the centre with glimmering vines twisted around it. Sat on the 
+altar in a stand is a clear glass orb. As you approach, the orb begins to shine.
+
+Do you touch the orb? (press 1 {para 71})
+
+Or leave it and return the way you came? (press 2 {para 72})
+"""
+    print(para_69_text)
+    choice_para_69 = input("Make a choice and press Enter: ")
+    if choice_para_69 == "1":
+        paragraph_71()
+    elif choice_para_69 == "2":
+        paragraph_72()
+    else:
+        paragraph_69()
+
+def paragraph_70(): #no Ring of Light
+    clear_screen()
+    para_70_text = """You have no means to explore the cave further and it would be too dangerous to go in
+without any light. You leave the cave and return to the pool before continuing on your way.
+"""
+    print(para_70_text)
+    msvcrt.getch()
+    paragraph_49()
+    
+def paragraph_71(): #touch the orb
+    clear_screen()
+    para_71_text = """You cautiously touch the orb. It feels warm to the touch. Suddenly the vines twisting
+around the altar come to life. They wrap themselves around you, forcing you into a kneeling position before
+the altar. Sharp white light explodes from the orb, blinding you. You hear a strange etheral voice as you
+fight against the vines. Eventually the light recedes and a dark spirit floats before you.
+"I am finally released!" it declares.
+It studies you as you continue to stuggle.
+"You will make a fine host," it murmurs.
+Against your will, the spirit invades your body. You fight the possession. You will need all your skill and 
+stamina for this battle of wills.
+"""
+    para_71_text_2 = """You resist the invasion of the spirit, but it steps up its attack.
+"""
+    para_71_text_3 = """You continue to resist the possession. The spirit screams against your defiance. 
+Without a body to inhabit, it retreats into the orb and the vines fall away from you.
+"""
+    para_71_text_4 = """You fail to resist the invasion of the spirit and it settles deeper into your body 
+as it attempts to take over your mind.
+"""
+    print(para_71_text)
+    print("Press any key to continue...")
+    skill_test = roll_dice()
+    stamina_test = roll_12_sided_dice()
+    if skill_test <= player.skill: 
+        print(para_71_text_2) #spirit fails to possess but tries again
+        print("Press any key to continue...")
+        msvcrt.getch()
+        if stamina_test <= player.stamina: 
+            print(para_71_text_3)#spirit fails to possess again. Complete possession prevented
+            print("Press any key to continue...")
+            paragraph_73() 
+        else:
+            paragraph_75()#fail
+    else:
+        print(para_71_text_4)#first failure to resist spirit, spirit continues to possess
+        print("Press any key to continue...")
+        msvcrt.getch()
+        if stamina_test <= player.stamina:
+            paragraph_75() #resist complete possession
+        else:
+            game_over_possession() #complete possession
+
+def paragraph_72(): #don't touch orb, leave the cave
+    clear_screen()
+    para_72_text = """You sense something ominous about the orb. You slowly back away and return back the way you came.
+Exiting the cave, you continue on your journey.
+"""
+    print(para_72_text)
+    print("Press any key to continue...")
+    msvcrt.getch()
+    paragraph_49()
+
+def paragraph_73(): #completely resist the dark spirit
+    clear_screen()
+    para_73_text = """You retreat out of the cave as fast as you can, leaving the orb and its dark spirit behind. You
+collapse by the pool, shaking after your experience. After taking a few minutes to calm yourself, you continue on your
+journey.
+"""
+    print(para_73_text)
+    print("Press any key to continue...")
+    msvcrt.getch()
+    paragraph_49()
+
+def paragraph_74():
+    clear_screen()
+    para_74_text = """You dont have this item.
+"""
+    print(para_74_text)
+    print("Press any key to continue...")
+    msvcrt.getch()
+    paragraph_70()
+    
+def paragraph_75(): #dark spirit inhabits your body, but keep free will
+    clear_screen()
+    stamina = 20
+    skill = 10
+    player.heal_damage(stamina)
+    player.increase_skill(skill)
+    para_75_text = """The dark spirit inhabits your body but through sheer determination you have managed to keep your 
+free will. The vines fall away from you and you stand up, shakily at first, but then power flows through you. The malevolent
+force inside you has increased your strength and fully restored your stamina. You may be harder to kill now, but this is the 
+spirit ensuring you wont die before it can take you over completely. You will need to be vigilant against any attempts at
+control by the spirit until you can find a way to remove it from your body.
+
+You leave the cave and continue on your way.
+"""
+    print(para_75_text)
+    print(f"Your stats have changed:\n Skill: {player.skill} Stamina: {player.stamina}")
+    player.add_status("Spirit Possession")
