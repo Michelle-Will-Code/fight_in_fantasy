@@ -170,7 +170,75 @@ Or continue along and try and find another way up? (press 2)
         paragraph_88()
         
 def paragraph_89(): #climb the path
-    pass
+    clear_screen()
+    stamina_gain = 4
+    para_89_text = """You climb the path staying alert for any signs of danger, but the path is quiet for 
+now. The path growns steeper and you being to tire. You see a smooth rocky outcropping that would be 
+suitable to sit and rest for a while.
+    
+Do you sit and rest for a while? (press 1 {para 91})
+    
+Or continue on your way? (press 2 {para 92})
+"""
+    print(para_89_text)
+    choice_para_89 = input("Make a choice and press Enter: ")
+    if choice_para_89 == "1":
+        player.heal_damage(stamina_gain)
+        paragraph_91()
+    elif choice_para_89 == "2":
+        paragraph_92()
+    else:
+        paragraph_89
 
 def paragraph_90(): #find another way up
-    para_90_text = """You decide to leave the path for now and search for a safer alternative
+    para_90_text = """You decide to leave the path for now and search for a safer alternative.
+"""
+
+def paragraph_91(): #sit and rest on the rock
+    clear_screen()
+    stamina_gain = 5
+    heal_potion_loss = 1
+    para_91_text = f"""You decide to sit down and take some time to rest (4 stamina points restored). While
+resting you decide to check over your injuries and the contents of your pack.
+
+STARTING STATS         INVENTORY
+Skill: {player.skill}               Gold: {player.gold}
+Stamina: {player.stamina}            Health Potions: {player.health_potions}
+Luck: {player.luck}                Bag: {player.inventory.show_inventory()}
+
+You consider whether to use a health potion before you continue on your way.
+
+Do you drink a potion? (press 1 -para 93)
+
+Or continue on your way? (press 2 - para 94)
+"""
+    print(para_91_text)
+    choice_para_91 = input("Make a choice and press Enter: ")
+    if choice_para_91 == "1":
+        player.subtract_health_potions(heal_potion_loss)
+        player.heal_damage(stamina_gain)
+        paragraph_93()
+    elif choice_para_91 == "2":
+        paragraph_94()
+    else:
+        paragraph_91()
+    
+
+def paragraph_92(): #continue on your way up the path
+    pass
+
+def paragraph_93(): #drink health potion
+    para_93_text = """You drink a health potion (restore 5 stamina) and feel much better. As you pack
+away your things and get ready to leave, you hear a noise above you.
+"""
+    print(para_93_text)
+    print("Press any key to continue...")
+    msvcrt.getch()
+    paragraph_95()
+
+def paragraph_95(): #spider attack
+    pass
+
+
+def paragraph_94(): #continueon your way
+    pass
