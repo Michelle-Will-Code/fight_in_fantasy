@@ -286,9 +286,9 @@ Or do you not have this ring? (press 2 {para 70})
     print(para_62_text)
     choice_para_62 = input("Make a choice and press Enter: ")
     if choice_para_62 == "1":
-         if player.inventory.has_item_check("Ring of Light"):
+        if player.inventory.has_item_check("Ring of Light"):
             paragraph_69()
-         else:
+        else:
             paragraph_70()
     elif choice_para_62 == "2":
         paragraph_70()

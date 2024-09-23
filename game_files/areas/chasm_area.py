@@ -3,10 +3,12 @@
 ## Imported Modules ##
 
 import msvcrt
+from game_files.game_components.combat import encounter_enemy
 from game_files.game_components.utilities import *
 from game_files.areas.temple_area import paragraph_100
 from game_files.game_components.player import *
 from game_files.areas.endings import *
+from game_files.game_components.enemies import *
 
 ## Paragraphs ##
 
@@ -39,6 +41,7 @@ poisonous fog claims you.
             print(para_80_text_1)
             print("Press any key to continue: ")
             msvcrt.getch()
+            paragraph_82()
         else:
             print(para_80_text_2)
             print("Press any key to continue: ")
@@ -69,6 +72,9 @@ putrid water. The creature snarls and retreats back into the pool, but you know 
 you linger. You decide to move on quickly.
 """
     print(para_83_text)
+    print("Press any key to continue: ")
+    msvcrt.getch()
+    paragraph_85()
 
 def paragraph_84(): #grabbed by swamp creature
     stamina_loss = 3
@@ -188,7 +194,7 @@ Or continue on your way? (press 2 {para 92})
     elif choice_para_89 == "2":
         paragraph_92()
     else:
-        paragraph_89
+        paragraph_89()
 
 def paragraph_90(): #find another way up
     para_90_text = """You decide to leave the path for now and search for a safer alternative.
@@ -196,8 +202,6 @@ def paragraph_90(): #find another way up
 
 def paragraph_91(): #sit and rest on the rock
     clear_screen()
-    stamina_gain = 5
-    heal_potion_loss = 1
     para_91_text = f"""You decide to sit down and take some time to rest (4 stamina points restored). While
 resting you decide to check over your injuries and the contents of your pack.
 
@@ -215,11 +219,9 @@ Or continue on your way? (press 2 - para 94)
     print(para_91_text)
     choice_para_91 = input("Make a choice and press Enter: ")
     if choice_para_91 == "1":
-        player.subtract_health_potions(heal_potion_loss)
-        player.heal_damage(stamina_gain)
         paragraph_93()
     elif choice_para_91 == "2":
-        paragraph_94()
+        paragraph_92()
     else:
         paragraph_91()
     
@@ -228,17 +230,71 @@ def paragraph_92(): #continue on your way up the path
     pass
 
 def paragraph_93(): #drink health potion
+    clear_screen()
+
     para_93_text = """You drink a health potion (restore 5 stamina) and feel much better. As you pack
 away your things and get ready to leave, you hear a noise above you.
+
 """
-    print(para_93_text)
-    print("Press any key to continue...")
-    msvcrt.getch()
-    paragraph_95()
+    para_93_text_1 = """You dont have any health potions left. As your pack away your things and get 
+ready to leave, you hear a noise above you.
 
-def paragraph_95(): #spider attack
-    pass
+"""
+    para_93_text_2 = """You leap out of the way just in time before a giant spider jumps from above. It
+hisses at you. Prepare to fight.
+"""
+    para_93_text_3 = """You try to dive out of the way as a giant spider leaps at you from above, but you
+end up trapped under it as it sinks its fangs into your shoulder. You struggle to get free but quickly 
+succumb to the paralysing bite. You feel the spider’s thick, sticky webbing wrapping around your body as 
+your vision begins to blur.
+"""
+    luck_test = roll_dice()
+    if player.use_health_potion():
+        print(para_93_text)
+    else:
+        print(para_93_text_1)
+
+    if luck_test <= player.luck:
+        print(para_93_text_2)
+        print("Press any key to continue: ")
+        msvcrt.getch()
+        paragraph_95()
+    else:
+        print(para_93_text_3)
+        print("Press any key to continue: ")
+        msvcrt.getch()
+        paragraph_96()
 
 
-def paragraph_94(): #continueon your way
-    pass
+def paragraph_95(): #fight spider
+    clear_screen()
+    para_95_text = """You kill the spider and then look around carefully for any other spiders in the area
+before moving on.
+"""
+    encounter_enemy(giant_spider)
+    if player.stamina >0:
+        print(para_95_text)
+        print("Press any key to continue: ")
+        paragraph_92()
+    else:
+        game_over()
+
+
+def paragraph_96(): #paralysed and in spider larder
+    para_96_text = """You regain partial awareness as you feel the rough stone beneath you. You are unsure
+how long you have been out for. The spider's webbing encasing you obscures your vision but it appears to be 
+dark. You find you have some movement now and you struggle in the silk. You have been lucky so far in that 
+the spider has not come to eat its newly caught meal, but time may well be running out.
+"""
+    skill_test = roll_dice()
+    if skill_test <= player.skill:
+        print("Press any key to continue:")
+        msvcrt.getch()
+        paragraph_97()
+    else:
+        print("Press any key to continue: ")
+        msvcrt.getch()
+        game_over_spider()
+
+def paragraph_97():#escape from webbing
+    para_97_text = """With great effort, you manage to get free of the sticky webbing. You find yourself in 
